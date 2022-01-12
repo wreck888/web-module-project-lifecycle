@@ -23,7 +23,9 @@ const StyledDiv = styled.div`
     padding: 16px 8px 12px 16px;
     background-color: #f3f3f3;
     color: black;
-    
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
 `
 
 const StyledNav = styled.div`
@@ -47,8 +49,9 @@ const StyledFLDiv = styled.div`
     background-color: #f3f3f3;
     color: black;
     display: flex;
-    flex-flow: wrap;
-    justify-content: space evenly;
+    flex-flow: row wrap;
+    justify-content: center;
+   
     
     
 `
@@ -60,7 +63,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    axios.get("https://api.github.com/users/viewgo")
+    axios.get("https://api.github.com/users/wreck888")
       .then(resp=> {
           console.log(resp)
           this.setState({
@@ -69,7 +72,7 @@ class App extends React.Component {
               info: resp.data
           })
     })
-    axios.get("https://api.github.com/users/viewgo/followers")
+    axios.get("https://api.github.com/users/wreck888/followers")
         .then(resp=> {
           console.log(resp.data)
           this.setState({
@@ -81,18 +84,18 @@ class App extends React.Component {
   }
   
 
-  // componentDidUpdate(prevState) {
-  //   if(prevState.user !== this.state.user){
-  //   axios.get(`https://api.github.com/users/${this.state.user}/followers`)
-  //     .then(resp=> {
-  //       console.log(resp.data)
-  //       this.setState({
-  //         ...this.state,
-  //         followers: resp.data
-  //       })
-  //     })
-  //   } 
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.user !== prevState.user){
+    axios.get(`https://api.github.com/users/${this.state.user}/followers`)
+      .then(resp=> {
+        console.log(resp.data)
+        this.setState({
+          ...this.state,
+          followers: resp.data
+        })
+      })
+    } 
+  }
 
   handleChange = (event) => {
     this.setState({
@@ -123,15 +126,15 @@ class App extends React.Component {
       <StyledNav>
         <h1>Github Info </h1><br/>
         <form>
-          <input onChange={this.handleChange}/>
+          <input value={this.state.user} onChange={this.handleChange}/>
           <button onClick={this.handleSearch}>Search User</button>
         </form>
       </StyledNav>
+      <h2>Github Handle <br/></h2>
       <StyledDiv>
-        <h2>Github Handle <br/></h2>
-        <User user={this.state.user} info={this.state.info} />
-       
+        <User user={this.state.user} info={this.state.info} /> 
       </StyledDiv>
+      <h2>Followers:</h2>
       < StyledFLDiv>
         <FollowerList followers={this.state.followers}/>
       </ StyledFLDiv>

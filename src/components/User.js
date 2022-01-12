@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
+
 class User extends React.Component {
 
     // componentDidMount(){
@@ -20,19 +21,19 @@ class User extends React.Component {
     render(){
         // console.log(this.props.user)
         return (
-        <div>
+        <>
             <div>
-                <img src={this.props.info.avatar_url} />
+                <img width = "400" src={this.props.info.avatar_url} />
             </div>
             <div>
                 <h3>Information</h3>
-                {this.props.info.login}
-                {this.props.info.name}
-                {this.props.info.followers}
-                {this.props.info.public_repos}
-                {this.props.info.html_url}
+                Username: {this.props.info.login} <br/>
+                Name: {this.props.info.name} <br/>
+                Followers: {this.props.info.followers} <br/>
+                Repositories: {this.props.info.public_repos} <br/>
+                Github: {this.props.info.html_url}
             </div>
-        </div>
+        </>
 
         )}
 }
